@@ -12,6 +12,7 @@ Features
 Technology used
 
 * HTML5 & Tailwind: For the structure and styling.
+* JavaScript (ES6+): Handling API calls and DOM manipulation.
 * OpenLibrary API: Used to fetch real-world book data.
 * Local Storage: To keep the "Favorites" list locally on the user's browser.
 
