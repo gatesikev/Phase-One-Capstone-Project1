@@ -19,12 +19,11 @@ OpenLibrary API: Used to fetch real-world book data.
 
 Local Storage: To keep the "Favorites" list saved locally on the user's browser.
 
-📂 Project Structure
-Plaintext
-├── index.html          # Main search page
-├── about.html          # Project information
-├── JavaScript/         # Folder for logic
-│   ├── main.js         # Search and display logic
-│   ├── fetchBooks.js   # API integration
-│   ├── favorite.js     # Favorites management
-└── favorites.html      # Saved books gallery
+Project Structure
+1) index.html: Main search page
+2) about.html: Project information
+3)  favorites.html : Saved books gallery
+4)  JavaScript/: Folder for logic. This folder contains 3 files including:
+    * main.js: Search and display logic
+    * fetchBooks.js: API integration
+    * favorite.js: Favorites management
