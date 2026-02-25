@@ -1,7 +1,9 @@
 Phase One Capstone Project: Book Explorer(OpenReads)
+
 A web application that allows users to search for books using an external API and save their top picks to a personalized "Favorites" list.
 
 Features
+
 Live Book Search: Search for books by title or author in real-time.
 
 Favorites System: Save books to local storage so they persist even after a page refresh.
