@@ -4,17 +4,16 @@ A web application that allows users to search for books using an external API an
 
 Features
 
-Live Book Search: Search for books by title or author in real-time.
-Favorites System: Save books to local storage so they persist even after a page refresh.
-Responsive UI: Clean, grid-based layout for easy browsing.
-Dynamic Rendering: Content is updated instantly using JavaScript without reloading the page.
+* Live Book Search: Search for books by title or author in real-time.
+* Favorites System: Save books to local storage so they persist even after a page refresh.
+* Responsive UI: Clean, grid-based layout for easy browsing.
+* Dynamic Rendering: Content is updated instantly using JavaScript without reloading the page.
 
 Technology used
 
-HTML5 & Tailwind: For the structure and styling.
-JavaScript (ES6+): Handling API calls and DOM manipulation.
-OpenLibrary API: Used to fetch real-world book data.
-Local Storage: To keep the "Favorites" list saved locally on the user's browser.
+* HTML5 & Tailwind: For the structure and styling.
+* OpenLibrary API: Used to fetch real-world book data.
+* Local Storage: To keep the "Favorites" list locally on the user's browser.
 
 Project Structure
 1) index.html: Main search page
