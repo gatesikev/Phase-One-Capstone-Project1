@@ -4,73 +4,88 @@ const searchBtn = document.getElementById('searchBtn');
 const searchInput = document.getElementById('searchInput');
 const bookGrid = document.getElementById('bookGrid');
 
-// Function to create a "Book Card" HTML string
 function createBookCard(book) {
-    // Some books don't have covers; we provide a fallback image
     const coverId = book.cover_i;
-    // Replace the old placeholder line with this one:
-const coverUrl = coverId 
-    ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg` 
-    : 'https://placehold.co/150x200?text=No+Cover';
+    const coverUrl = coverId 
+        ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg` 
+        : 'https://placehold.co/150x200?text=No+Cover';
 
     return `
         <div class="bg-white p-4 rounded-lg shadow-md hover:shadow-xl transition flex flex-col items-center">
             <img src="${coverUrl}" alt="${book.title}" class="h-48 w-32 object-cover mb-4 rounded">
             <h3 class="font-bold text-center text-gray-800 line-clamp-1">${book.title}</h3>
             <p class="text-sm text-gray-500 mb-4">${book.author_name ? book.author_name[0] : 'Unknown Author'}</p>
-            <button class="fav-btn bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-900 mt-auto w-full">
+            <button class="fav-btn bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-900 mt-auto w-full transition active:scale-95">
                 Add to Favorites
             </button>
         </div>
     `;
 }
 
-// Event Listener for Search
-searchBtn.addEventListener('click', async () => {
-    const query = searchInput.value.trim();
-    if (!query) return;
-
-    // Show loading state
-    bookGrid.innerHTML = '<p class="col-span-full text-center text-xl">🔍 Searching for books...</p>';
-
+// Logic to fetch and display books
+async function performSearch(query) {
+    bookGrid.innerHTML = '<p class="col-span-full text-center text-xl">🔍 Loading books...</p>';
     const books = await searchBooks(query);
-
     if (books.length === 0) {
         bookGrid.innerHTML = '<p class="col-span-full text-center text-red-500">No books found. Try another search!</p>';
         return;
     }
-
-    // Render the books
     bookGrid.innerHTML = books.map(book => createBookCard(book)).join('');
+}
+
+// FIX: Load default books when page opens
+window.addEventListener('DOMContentLoaded', () => {
+    performSearch('Bestsellers'); // Default keyword
 });
 
+// Event Listener for Search Button
+searchBtn.addEventListener('click', () => {
+    const query = searchInput.value.trim();
+    if (query) performSearch(query);
+});
 
-// 1. Initialize favorites from localStorage or an empty array
+// FAVORITES LOGIC
 let favorites = JSON.parse(localStorage.getItem('book_favorites')) || [];
 
-// 2. Add Event Listener to the book grid
-// We use 'event delegation' because the buttons are created dynamically
 document.getElementById('bookGrid').addEventListener('click', (e) => {
     if (e.target.classList.contains('fav-btn')) {
         const card = e.target.closest('div');
-        
-        // Grab book details from the card
         const bookData = {
             title: card.querySelector('h3').innerText,
             author: card.querySelector('p').innerText,
             image: card.querySelector('img').src,
-            id: Date.now() // Unique ID to help with deleting later
+            id: Date.now()
         };
 
-        // Check if already in favorites to avoid duplicates
         const isAlreadySaved = favorites.some(fav => fav.title === bookData.title);
-        
         if (!isAlreadySaved) {
             favorites.push(bookData);
             localStorage.setItem('book_favorites', JSON.stringify(favorites));
-            alert('Added to Favorites! ❤️');
+            // Better UI Feedback
+            e.target.innerText = "Added! ❤️";
+            e.target.classList.replace('bg-gray-800', 'bg-green-600');
         } else {
             alert('This book is already in your favorites!');
         }
     }
+});
+
+// Function to handle the navbar toggle
+const initNavbar = () => {
+    const menuToggle = document.getElementById('menu-toggle');
+    const navLinks = document.getElementById('nav-links');
+
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', () => {
+            // This toggles the 'hidden' class specifically
+            navLinks.classList.toggle('hidden');
+            console.log("Menu toggled!"); // Check your console to see if this fires
+        });
+    }
+};
+
+// Run the navbar init when the DOM is ready
+window.addEventListener('DOMContentLoaded', () => {
+    initNavbar();
+    // Your performSearch logic should also be here
 });
